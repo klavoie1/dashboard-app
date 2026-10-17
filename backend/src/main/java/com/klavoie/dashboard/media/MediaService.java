@@ -11,6 +11,7 @@ public class MediaService {
 
     static final String DEFAULT_STATUS = "want";
     static final String STATUS_PATTERN = "want|in-progress|finished|paused|dropped";
+    static final String KIND_PATTERN = "manga|anime|tv|movie|book|light-novel|game|audiobook";
 
     private final MediaRepository repo;
 

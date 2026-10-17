@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record MediaRequest(
-        @NotBlank String kind,
+        @NotBlank @Pattern(regexp = MediaService.KIND_PATTERN) String kind,
         @NotBlank String title,
         Long seriesId,
         Double number,
         @Pattern(regexp = MediaService.STATUS_PATTERN) String status,
         Integer rating,
-        String details) {
-}
+        String details
+) {}

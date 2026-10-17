@@ -52,4 +52,20 @@ class MediaApiTest {
                         .content("{\"kind\": \"book\", \"title\": \"Untitled\", \"status\": \"to read\"}"))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @WithMockUser
+    void acceptsKindType() throws Exception {
+        mvc.perform(post("/api/media").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"kind\": \"light-novel\", \"title\": \"Untitled\", \"status\": \"want\"}"))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @WithMockUser
+    void rejectsUnknownKind() throws Exception {
+        mvc.perform(post("/api/media").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"kind\": \"books\", \"title\": \"Untitled\", \"status\": \"want\"}"))
+                .andExpect(status().isBadRequest());
+    }
 }
