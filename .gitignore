@@ -1,0 +1,27 @@
+# Personal Data
+/data/
+/backend/data/
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+backups/
+/media/
+/backend/media/
+
+# Secrets and Local Config
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.properties
+
+# Build Output / IDE
+target/
+node_modules/
+dist/
+.idea/
+*.iml
+.vscode
+identifier.sqlite
+
