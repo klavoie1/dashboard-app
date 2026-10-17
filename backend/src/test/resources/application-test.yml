@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:file:testdb?mode=memory&cache=shared
+  flyway:
+    locations: classpath:db/migration,classpath:db/dev
+app:
+  user: test
+  password-hash: "{noop}test"
+  remember-me-key: test-key

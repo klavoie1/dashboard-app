@@ -1,0 +1,35 @@
+package com.klavoie.dashboard.media;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class MediaService {
+
+    static final String DEFAULT_STATUS = "to read";
+
+    private final MediaRepository repo;
+
+    MediaService(MediaRepository repo) { this.repo = repo; }
+
+    @Transactional(readOnly = true)
+    public List<MediaResponse> list(String kind) {
+        List<Media> media = kind == null ? repo.findAll() : repo.findByKindOrderByTitle(kind);
+        return media.stream().map(MediaResponse::from).toList();
+    }
+
+    @Transactional
+    public MediaResponse create(MediaRequest req) {
+        Media m = new Media();
+        m.setKind(req.kind());
+        m.setTitle(req.title());
+        m.setSeriesId(req.seriesId());
+        m.setNumber(req.number());
+        m.setStatus(req.status() == null ? DEFAULT_STATUS : req.status());
+        m.setRating(req.rating());
+        m.setDetails(req.details());
+        return MediaResponse.from(repo.save(m));
+    }
+}

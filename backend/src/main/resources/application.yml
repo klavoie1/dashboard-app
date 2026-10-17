@@ -1,0 +1,29 @@
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+spring:
+  config:
+    import: optional:file:.env[.properties],optional:file:../.env[.properties]
+  datasource:
+    url: jdbc:sqlite:${DB_PATH:backend/data/dashboard.db}
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+      connection-init-sql: PRAGMA foreign_keys=ON;
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+app:
+  user: ${APP_USER}
+  password-hash: ${APP_PASSWORD_HASH}
+  remember-me-key: ${REMEMBER_ME_KEY}
+  media-root: ${MEDIA_ROOT:./media}
+  kavita:
+    url: ${KAVITA_URL:}
+    api-key: ${KAVITA_API_KEY:}
+  jellyfin:
+    url: ${JELLYFIN_URL:}
+    api-key: ${JELLYFIN_API_KEY:}

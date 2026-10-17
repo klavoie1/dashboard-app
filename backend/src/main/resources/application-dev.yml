@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:backend/data/dev.db
+  flyway:
+    locations: classpath:db/migration,classpath:db/dev
