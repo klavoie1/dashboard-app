@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 
-type Media = { id: number; title: string; kind: string; status: string };
+type MediaStatus = "want" | "in-progress" | "finished" | "paused" | "dropped";
+type Media = { id: number; title: string; kind: string; status: MediaStatus };
 
 export default function DashboardPage() {
     const [media, setMedia] = useState<Media[]>([]);

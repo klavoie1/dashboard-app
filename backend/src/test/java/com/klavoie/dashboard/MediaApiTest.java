@@ -6,9 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -31,5 +34,22 @@ class MediaApiTest {
     @Test
     void needsLogin() throws Exception {
         mvc.perform(get("/api/media")).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void defaultsStatusToWant() throws Exception {
+        mvc.perform(post("/api/media").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"kind\": \"book\", \"title\": \"Untitled\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.status").value("want"));
+    }
+
+    @Test
+    @WithMockUser
+    void rejectsUnknownStatus() throws Exception {
+        mvc.perform(post("/api/media").with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"kind\": \"book\", \"title\": \"Untitled\", \"status\": \"to read\"}"))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -1,5 +1,6 @@
 package com.klavoie.dashboard.media;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,7 +9,8 @@ import java.util.List;
 @Service
 public class MediaService {
 
-    static final String DEFAULT_STATUS = "to read";
+    static final String DEFAULT_STATUS = "want";
+    static final String STATUS_PATTERN = "want|in-progress|finished|paused|dropped";
 
     private final MediaRepository repo;
 
@@ -16,7 +18,7 @@ public class MediaService {
 
     @Transactional(readOnly = true)
     public List<MediaResponse> list(String kind) {
-        List<Media> media = kind == null ? repo.findAll() : repo.findByKindOrderByTitle(kind);
+        List<Media> media = kind == null ? repo.findAll(Sort.by("title")) : repo.findByKindOrderByTitle(kind);
         return media.stream().map(MediaResponse::from).toList();
     }
 

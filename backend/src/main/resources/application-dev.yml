@@ -1,5 +1,6 @@
 spring:
   datasource:
-    url: jdbc:sqlite:backend/data/dev.db
+    url: jdbc:sqlite:${DEV_DB_PATH:backend/data/dev.db}
   flyway:
     locations: classpath:db/migration,classpath:db/dev
+    out-of-order: true   # sample data is V1000, so new schema migrations land "behind" it
