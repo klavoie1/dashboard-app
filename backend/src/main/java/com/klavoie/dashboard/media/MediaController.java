@@ -20,4 +20,13 @@ class MediaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     MediaResponse create(@Valid @RequestBody MediaRequest req) { return service.create(req); }
+
+    @GetMapping("/{id}/episodes")
+    List<EpisodeResponse> episodes(@PathVariable Long id) { return service.listEpisodes(id); }
+
+    @PostMapping("/{id}/episodes")
+    @ResponseStatus(HttpStatus.CREATED)
+    EpisodeResponse addEpisode(@PathVariable Long id, @Valid @RequestBody EpisodeRequest req) {
+        return service.addEpisode(id, req);
+    }
 }
