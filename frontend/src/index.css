@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Inter:wght@400;600&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=DM+Serif+Display&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -12,13 +12,13 @@
     --color-accent: #c2e88d;
     --color-accent-soft: #293923;
 
-    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Quicksand", ui-sans-serif, system-ui, sans-serif;
     --font-serif: "DM Serif Display", Georgia, serif;
 }
 
 @layer base {
     body {
-        @apply m-0 bg-bg font-sans text-ink-soft;
+        @apply m-0 bg-bg font-sans font-medium text-ink-soft;
     }
 
     :focus-visible {
