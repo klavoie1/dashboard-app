@@ -25,7 +25,7 @@ export default function PersonalOverview() {
                             {value}
                         </p>
 
-                        <div className="flex flex-col gap-1.25">
+                        <div className="flex flex-col gap-px">
                             <p className="m-0 text-xs text-ink">
                                 {label}
                             </p>
