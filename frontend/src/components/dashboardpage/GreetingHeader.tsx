@@ -24,7 +24,7 @@ export default function GreetingHeader({
     });
 
     return (
-        <section className="flex flex-wrap items-center justify-between gap-6 px-4 pt-8 pb-7 md:px-8 xl:px-16">
+        <section className="flex flex-wrap items-center justify-between gap-6 pt-8 pb-7">
             <div className="flex flex-col gap-2">
                 <p className="m-0 text-[10px] uppercase text-ink-muted">{dateFormat} • Week {week}</p>
                 <h1 className="m-0 font-serif text-[38px] font-normal leading-normal text-ink">

@@ -93,7 +93,7 @@ export default function SiteNavbar({
             <header id="site-navigation" className="" >
 
                 {/* Top Section of Navbar - Global Navigation */}
-                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line px-4 md:px-8 xl:gap-9 xl:px-16">
+                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line xl:gap-9">
 
                     {/* Keeper Logo & Name */}
                     <Link to="/" aria-label="Keeper home" className="flex shrink-0 items-center gap-2.25">
@@ -159,7 +159,7 @@ export default function SiteNavbar({
                 {/* Bottom Section of Navbar - Media Navigation */}
                 <nav
                     aria-label="Media categories"
-                    className="flex h-13 items-center gap-7 overflow-x-auto px-4 scrollbar-none md:px-8 xl:px-16"
+                    className="flex h-13 items-center gap-7 overflow-x-auto scrollbar-none"
                 >
                     <p id="media-label" className="m-0 shrink-0 text-[10px] whitespace-nowrap text-ink-muted">
                         YOUR UNIVERSE
