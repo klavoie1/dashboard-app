@@ -1,22 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import {Link, NavLink} from "react-router-dom";
-
-// Rendered as a mask filled with currentColor so the icon follows the text color
-function Icon({ src, box, className = '' }: { src: string; box: string; className?: string }) {
-    return (
-        <span
-            aria-hidden="true"
-            className={`block shrink-0 bg-current ${box} ${className}`}
-            style={{
-                maskImage: `url(${src})`,
-                WebkitMaskImage: `url(${src})`,
-                maskSize: 'contain',
-                maskRepeat: 'no-repeat',
-                maskPosition: 'center',
-            }}
-        />
-    )
-}
+import Icon from "./Icon.tsx";
 
 
 const PRIMARY_LINKS = [
@@ -90,10 +74,10 @@ export default function SiteNavbar({
 
     return (
         <div>
-            <header id="site-navigation" className="" >
+            <header id="site-navigation" className="">
 
                 {/* Top Section of Navbar - Global Navigation */}
-                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line xl:gap-9">
+                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line xl:gap-9 ">
 
                     {/* Keeper Logo & Name */}
                     <Link to="/" aria-label="Keeper home" className="flex shrink-0 items-center gap-2.25">

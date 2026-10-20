@@ -1,6 +1,7 @@
 import GreetingHeader from "../components/dashboardpage/GreetingHeader.tsx";
 import FeaturedJourney from "../components/dashboardpage/FeaturedJourney.tsx";
 import PersonalOverview from "../components/dashboardpage/PersonalOverview.tsx"
+import ContinueStories from "../components/dashboardpage/ContinueStories.tsx";
 
 
 export default function DashboardPage() {
@@ -25,6 +26,7 @@ export default function DashboardPage() {
                 status="IN YOUR LIBRARY · WATCHING"
             />
             <PersonalOverview />
+            <ContinueStories />
         </main>
     );
 }
