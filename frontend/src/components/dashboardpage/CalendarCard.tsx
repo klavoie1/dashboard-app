@@ -1,26 +1,38 @@
 import {Link} from "react-router-dom";
 import Icon from "../Icon.tsx";
+import {episodePath} from "../mediapage/titles.ts";
 
-type Plan = {
-    // ISO date, e.g. "2026-10-21"
-    date: string
-    title: string
-    detail: string
+// An episode airing soon for something you're following (UpcomingEpisode.java)
+export type Upcoming = {
+    mediaId: number
+    mediaTitle: string
+    kind: string
+    number: number
+    season: number | null
+    seasonNumber: number | null
+    title: string | null
+    airDate: string
 }
-
-// Placeholder plans until scheduling is stored in the backend
-const PLANS: Plan[] = [
-    { date: '2026-10-21', title: 'Dune: Part Two', detail: 'Finish watching · Tomorrow evening' },
-    { date: '2026-10-23', title: 'Frieren · Episode 7', detail: 'Watch night · Friday, 8:00 pm' },
-    { date: '2026-10-25', title: 'Project Hail Mary', detail: 'Listening hour · Sunday, 10:00 am' },
-]
 
 // "T00:00" makes the date local midnight; a bare "2026-10-21" is UTC and can land on the 20th
 function toLocalDate(date: string) {
     return new Date(`${date}T00:00`)
 }
 
-export default function CalendarCard() {
+function relativeDay(date: Date) {
+    const days = Math.round((date.getTime() - new Date(new Date().toDateString()).getTime()) / 86_400_000)
+    if (days === 0) return "Today"
+    if (days === 1) return "Tomorrow"
+    return date.toLocaleDateString('en-US', { weekday: 'long' })
+}
+
+export default function CalendarCard({ upcoming }: { upcoming: Upcoming[] | null }) {
+    const PLANS = (upcoming ?? []).map((u) => ({
+        date: u.airDate,
+        title: u.mediaTitle,
+        to: episodePath(u.mediaId, u.number),
+        detail: `${u.season ? `S${u.season} · ` : ""}Episode ${u.seasonNumber ?? u.number}${u.title ? ` · ${u.title}` : ""}`,
+    }))
     return (
         <section className="flex h-full flex-col gap-6 rounded-xl bg-surface p-6">
             <div className="flex items-center justify-between gap-4">
@@ -29,6 +41,12 @@ export default function CalendarCard() {
                 </h2>
                 <Icon src="/space-icons/calendar-days.svg" box="size-4.5" className="text-ink-muted" />
             </div>
+
+            {upcoming !== null && PLANS.length === 0 && (
+                <p className="m-0 text-[15px] text-ink-muted">
+                    Nothing airing soon for the shows you’re following. New episodes appear here once their dates are known.
+                </p>
+            )}
 
             <ul className="m-0 flex list-none flex-col gap-6 p-0">
                 {PLANS.map((plan) => {
@@ -45,16 +63,16 @@ export default function CalendarCard() {
                                 </span>
                             </time>
                             <div className="flex min-w-0 flex-col gap-1.75">
-                                <p className="m-0 text-base font-semibold text-ink">{plan.title}</p>
-                                <p className="m-0 text-[13px] text-ink-muted">{plan.detail}</p>
+                                <Link to={plan.to} className="text-base font-semibold text-ink hover:text-accent">{plan.title}</Link>
+                                <p className="m-0 text-[13px] text-ink-muted">{relativeDay(day)} · {plan.detail}</p>
                             </div>
                         </li>
                     )
                 })}
             </ul>
 
-            <Link to="/journal" className="mt-auto flex items-center gap-1.75 self-start text-[14px] text-accent transition-opacity hover:opacity-80">
-                View your schedule
+            <Link to="/library?status=in-progress" className="mt-auto flex items-center gap-1.75 self-start text-[14px] text-accent transition-opacity hover:opacity-80">
+                See what you’re following
                 <Icon src="/featured/arrow-up-right.svg" box="size-[13px]" />
             </Link>
         </section>

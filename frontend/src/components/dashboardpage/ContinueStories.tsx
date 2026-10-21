@@ -2,39 +2,52 @@ import {Link} from "react-router-dom";
 import Icon from "../Icon.tsx";
 import MediaCard, {type MediaCardProps} from "./MediaCard.tsx";
 import {useState} from "react";
-
-// Placeholder data until the backend stores covers, creators and progress
-const PLACEHOLDER_COVER = "/featured/frieren.jpg"
+import {activeVerb, coverOf, quickStep, typeOf, unitOf, updatedText, type MediaSummary} from "../library/media.ts";
 
 type Category = 'Watching' | 'Reading' | 'Playing' | 'Listening';
 type Filter = "All" | Category
-
-type Story = Omit<MediaCardProps, "to"> & {
+type Story = MediaCardProps & {
     id: number
     category: Category
 }
 
-const STORIES: Story[] = [
-    { id: 1, type: "Anime", category: "Watching", title: "Frieren: Beyond Journey's End", creator: "Kanehito Yamada", cover: PLACEHOLDER_COVER, progress: 6, total: 28, unit: "episodes", hint: "Next: Like a Fairy Tale", actionLabel: "Mark episode watched" },
-    { id: 2, type: "Book", category: "Reading", title: "The Name of the Wind", creator: "Patrick Rothfuss", cover: PLACEHOLDER_COVER, progress: 212, total: 662, unit: "pages", hint: "About 7 hours left", actionLabel: "Log pages" },
-    { id: 3, type: "Game", category: "Playing", title: "Hollow Knight", creator: "Team Cherry", cover: PLACEHOLDER_COVER, progress: 42, total: 100, unit: "%", hint: "Last played 3 days ago", actionLabel: "Log session" },
-    { id: 4, type: "Manga", category: "Reading", title: "Vinland Saga", creator: "Makoto Yukimura", cover: PLACEHOLDER_COVER, progress: 54, total: 214, unit: "chapters", hint: "Next: Chapter 55", actionLabel: "Mark chapter read" },
-    { id: 5, type: "TV Show", category: "Watching", title: "Severance", creator: "Dan Erickson", cover: PLACEHOLDER_COVER, progress: 4, total: 19, unit: "episodes", hint: "Next: S1 E5", actionLabel: "Mark episode watched" },
-    { id: 6, type: "Audiobook", category: "Listening", title: "Project Hail Mary", creator: "Andy Weir", cover: PLACEHOLDER_COVER, progress: 5, total: 16, unit: "hours", hint: "About 11 hours left", actionLabel: "Log listening" },
-    { id: 7, type: "Book", category: "Reading", title: "Piranesi", creator: "Susanna Clarke", cover: PLACEHOLDER_COVER, progress: 88, total: 272, unit: "pages", hint: "About 4 hours left", actionLabel: "Log pages" },
-    { id: 8, type: "Anime", category: "Watching", title: "Mushishi", creator: "Yuki Urushibara", cover: PLACEHOLDER_COVER, progress: 11, total: 26, unit: "episodes", hint: "Next: The Sound of Rust", actionLabel: "Mark episode watched" },
-]
-
 const FILTERS: Filter[] = ["All", "Watching", "Reading", "Playing", "Listening"]
 
-function countFor(f: "All" | Category) {
-    if (f === "All") return STORIES.length
-    return STORIES.filter((story) => story.category === f).length
+// Every in-progress title as a card, most recently updated first
+function toStories(media: MediaSummary[], onLog: (m: MediaSummary) => void): Story[] {
+    return media
+        .filter((m) => m.status === "in-progress")
+        .sort((a, b) => (b.lastActivityOn ?? "").localeCompare(a.lastActivityOn ?? ""))
+        .map((m) => {
+            const step = quickStep(m)
+            const percent = unitOf(m) === "percent" || m.kind === "game"
+            const minutes = unitOf(m) === "minutes"
+            return {
+                id: m.id,
+                to: `/library/${m.id}`,
+                category: activeVerb(m) as Category,
+                type: typeOf(m),
+                title: m.title,
+                creator: m.creator ?? "",
+                cover: coverOf(m),
+                progress: m.progress,
+                total: percent ? 100 : m.total ?? 0,
+                unit: percent ? "%" : minutes ? "min" : unitOf(m),
+                hint: updatedText(m.lastActivityOn),
+                actionLabel: step?.label ?? "Open",
+                onAction: step ? () => onLog(m) : undefined,
+            }
+        })
 }
 
-export default function ContinueStories({ viewTo = "/library" }: { viewTo?: string }) {
+export default function ContinueStories({ media, onLog, viewTo = "/library?status=in-progress" }: {
+    media: MediaSummary[] | null
+    onLog: (m: MediaSummary) => void
+    viewTo?: string
+}) {
     const [filter, setFilter] = useState<"All" | Category>("All")
-
+    const STORIES = toStories(media ?? [], onLog)
+    const countFor = (f: Filter) => (f === "All" ? STORIES.length : STORIES.filter((story) => story.category === f).length)
     const visible = filter === "All" ? STORIES : STORIES.filter((story) => story.category === filter)
 
     return (
@@ -84,11 +97,17 @@ export default function ContinueStories({ viewTo = "/library" }: { viewTo?: stri
                 </p>
             </div>
 
+            {media !== null && STORIES.length === 0 && (
+                <p className="m-0 text-base text-ink-muted">
+                    Nothing in progress. Start something from <Link to="/library?status=want" className="text-accent hover:opacity-80">your “for later” list</Link>.
+                </p>
+            )}
+
             {/* Media Cards */}
             <ul className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
                 {visible.map((story) => (
                     <li key={story.id}>
-                        <MediaCard {...story} to={`/library/${story.id}`} />
+                        <MediaCard {...story} />
                     </li>
                 ))}
             </ul>

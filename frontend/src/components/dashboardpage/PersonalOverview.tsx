@@ -1,13 +1,17 @@
-const METRICS = [
-    { value: 8, label: 'In Progress', description: 'Across all your worlds' },
-    { value: 112, label: 'Completed', description: 'Stories that stay with you' },
-    { value: 128, label: 'For Later', description: 'Your next great find' }
-]
+import type {MediaSummary} from "../library/media.ts";
+
 const GOAL_YEAR = new Date().getFullYear()
 const GOAL = 30
-const GOAL_PROGRESS = 24
 
-export default function PersonalOverview() {
+export default function PersonalOverview({ media }: { media: MediaSummary[] | null }) {
+    const count = (status: string) => media?.filter((m) => m.status === status).length ?? 0
+    const METRICS = [
+        { value: count('in-progress'), label: 'In Progress', description: 'Across all your worlds' },
+        { value: count('finished'), label: 'Completed', description: 'Stories that stay with you' },
+        { value: count('want'), label: 'For Later', description: 'Your next great find' }
+    ]
+    // Titles finished this year count toward the goal
+    const GOAL_PROGRESS = media?.filter((m) => m.finishedOn?.startsWith(String(GOAL_YEAR))).length ?? 0
     const percent = GOAL > 0 ? Math.min(100, (GOAL_PROGRESS / GOAL) * 100) : 0
     const remaining = GOAL - GOAL_PROGRESS
     const message = remaining > 0

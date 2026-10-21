@@ -1,21 +1,24 @@
 import {Link} from "react-router-dom";
-import {findTitle, type Title} from "./titles.ts";
+import type {RelatedTitle} from "./titles.ts";
 
-export default function RelatedTitles({ ids }: { ids: number[] }) {
-    const related = ids.map(findTitle).filter((t): t is Title => t !== undefined)
+export default function RelatedTitles({ related }: { related: RelatedTitle[] }) {
     if (related.length === 0) return null
 
     return (
-        <section className="flex flex-col gap-6">
-            <h2 className="m-0 font-serif text-3xl font-normal text-ink">Connected stories</h2>
-            <ul className="m-0 grid list-none grid-cols-2 gap-5 p-0 md:grid-cols-4 lg:grid-cols-6">
+        <section id="related" className="flex flex-col gap-4.5 rounded-xl bg-surface p-6">
+            <h2 className="m-0 text-[13px] font-semibold text-ink-muted uppercase">More in this series</h2>
+            <ul className="m-0 flex list-none flex-col gap-4 p-0">
                 {related.map((t) => (
-                    <li key={t.id} className="group relative flex flex-col gap-2">
-                        <img src={t.cover} alt="" className="aspect-2/3 w-full rounded-md object-cover" />
-                        <p className="m-0 text-[12px] text-accent uppercase">{t.type}</p>
-                        <Link to={`/library/${t.id}`} className="text-base font-medium text-ink after:absolute after:inset-0 group-hover:text-accent">
-                            {t.title}
-                        </Link>
+                    <li key={t.id} className="group relative flex items-center gap-4">
+                        <img src={t.cover} alt="" className="h-21 w-15 shrink-0 rounded-[3px] object-cover" />
+                        <div className="flex min-w-0 flex-col gap-2">
+                            <p className="m-0 text-[12px] text-accent uppercase">{t.type}</p>
+                            {/* ::after stretches the link over the whole row */}
+                            <Link to={`/library/${t.id}`} className="text-[15px] font-semibold text-ink after:absolute after:inset-0 group-hover:text-accent">
+                                {t.title}
+                            </Link>
+                            {t.creator && <p className="m-0 text-[13px] text-ink-muted">{t.creator}</p>}
+                        </div>
                     </li>
                 ))}
             </ul>

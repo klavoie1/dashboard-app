@@ -1,7 +1,9 @@
-import {useEffect, useRef, useState} from "react";
-import {Link, NavLink} from "react-router-dom";
+import {useEffect, useRef} from "react";
+import {Link, NavLink, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import Icon from "./Icon.tsx";
-import Tooltip from "./Tooltip.tsx";
+import AccountMenu from "./AccountMenu.tsx";
+import NotificationsMenu from "./NotificationsMenu.tsx";
+import {initialsOf, useMe} from "./useMe.ts";
 import {CONTAINER} from "./container.ts";
 
 
@@ -9,6 +11,7 @@ const PRIMARY_LINKS = [
     { label: 'Home', to: '/'},
     { label: 'Discover', to: '/discover' },
     { label: 'My Library', to: '/library' },
+    { label: 'Characters', to: '/characters' },
     { label: 'Journal', to: '/journal' }
 ];
 
@@ -27,17 +30,22 @@ const MEDIA_CATEGORIES = [
 
 
 export default function SiteNavbar({
-    activeCategory: initialCategory = 'all',
     onCategoryChange,
     onSearch,
-    userInitials = 'US',}: {
-    activeCategory?: string
+    userInitials,}: {
     onCategoryChange?: (id: string) => void
     onSearch?: (query: string) => void
     userInitials?: string
 }) {
 
-    const [activeCategory, setActiveCategory] = useState(initialCategory)
+    const navigate = useNavigate()
+    const me = useMe()
+    const initials = userInitials ?? initialsOf(me)
+    const location = useLocation()
+    const [params] = useSearchParams()
+    // On the library the URL decides which tab is active, so links and Back stay in sync
+    // Elsewhere no tab is active, since the tabs open the library
+    const activeCategory = location.pathname === '/library' ? params.get('category') ?? 'all' : ''
     const searchRef = useRef<HTMLInputElement>(null)
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
@@ -54,8 +62,8 @@ export default function SiteNavbar({
     }, [])
 
     function selectCategory(id: string, { focus = false } = {}) {
-        setActiveCategory(id)
         onCategoryChange?.(id)
+        navigate(id === 'all' ? '/library' : `/library?category=${id}`)
         if (focus) {
             const tab = tabRefs.current[id]
             tab?.focus()
@@ -110,7 +118,9 @@ export default function SiteNavbar({
                         role="search"
                         onSubmit={(e) => {
                             e.preventDefault()
-                            onSearch?.(searchRef.current?.value ?? '')
+                            const query = searchRef.current?.value.trim() ?? ''
+                            onSearch?.(query)
+                            if (query) navigate(`/search?q=${encodeURIComponent(query)}`)
                         }}
                         className="flex h-10 min-w-40 flex-1 items-center gap-2.5 group rounded-md border bg-surface px-3.5 transition-colors focus-within:border-accent xl:w-92 xl:flex-none 2xl:w-full"
                     >
@@ -128,24 +138,8 @@ export default function SiteNavbar({
                     </form>
 
                     <div className="flex flex-none items-center justify-end gap-5 xl:min-w-px xl:flex-1">
-                        <Tooltip label="Notifications" side="bottom">
-                            <button
-                                type="button"
-                                aria-label="Notifications"
-                                className="flex cursor-pointer rounded border-0 bg-transparent p-0"
-                            >
-                                <Icon src="/notifications.svg" box="size-[19px]" className="text-ink-muted transition-colors hover:text-ink" />
-                            </button>
-                        </Tooltip>
-                        <Tooltip label="Account" side="bottom" align="end">
-                            <button
-                                type="button"
-                                aria-label="Account menu"
-                                className="flex size-8.5 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-accent-soft p-0 text-[11px] font-semibold text-accent"
-                            >
-                                {userInitials}
-                            </button>
-                        </Tooltip>
+                        <NotificationsMenu />
+                        <AccountMenu initials={initials} />
                     </div>
                 </nav>
             </header>
