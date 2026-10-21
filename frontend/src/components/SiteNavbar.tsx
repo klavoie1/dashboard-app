@@ -77,28 +77,30 @@ export default function SiteNavbar({
             <header id="site-navigation" className="">
 
                 {/* Top Section of Navbar - Global Navigation */}
-                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line xl:gap-9 ">
+                {/* On wide screens a 1fr / auto / 1fr grid keeps the search box centred on the page */}
+                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line 2xl:grid 2xl:grid-cols-[1fr_minmax(0,24rem)_1fr] xl:gap-9">
 
-                    {/* Keeper Logo & Name */}
-                    <Link to="/" aria-label="Keeper home" className="flex shrink-0 items-center gap-2.25">
-                        <span className="font-serif text-[32px] leading-normal whitespace-nowrap text-ink">Keeper</span>
-                    </Link>
+                    <div className="flex min-w-0 items-center gap-6 xl:gap-9">
+                        {/* Keeper Logo & Name */}
+                        <Link to="/" aria-label="Keeper home" className="flex shrink-0 items-center gap-2.25">
+                            <span className="font-serif text-[32px] leading-normal whitespace-nowrap text-ink">Keeper</span>
+                        </Link>
 
-                    {/* Website Section Movement Area */}
-                    <ul className="m-0 hidden shrink-0 list-none items-center gap-6.5 p-0 text-[13px] whitespace-nowrap md:flex">
-                        {PRIMARY_LINKS.map(({ label, to }) => (
-                            <li key={label}>
-                                <NavLink
-                                    to={to}
-                                    end={to === '/'}
-                                    className="transition-colors hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-accent"
-                                >
-                                    {label}
-                                </NavLink>
-                            </li>
-                        ))}
-                    </ul>
-
+                        {/* Website Section Movement Area */}
+                        <ul className="m-0 hidden shrink-0 list-none items-center gap-6.5 p-0 text-[13px] whitespace-nowrap md:flex">
+                            {PRIMARY_LINKS.map(({ label, to }) => (
+                                <li key={label}>
+                                    <NavLink
+                                        to={to}
+                                        end={to === '/'}
+                                        className="transition-colors hover:text-ink aria-[current=page]:font-semibold aria-[current=page]:text-accent"
+                                    >
+                                        {label}
+                                    </NavLink>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
                     {/* Search Box Area */}
                     <form
@@ -107,7 +109,7 @@ export default function SiteNavbar({
                             e.preventDefault()
                             onSearch?.(searchRef.current?.value ?? '')
                         }}
-                        className="flex h-9.5 min-w-40 flex-1 items-center gap-2.5 group rounded-md border bg-surface px-3.5 transition-colors focus-within:border-accent xl:w-92 xl:flex-none"
+                        className="flex h-10 min-w-40 flex-1 items-center gap-2.5 group rounded-md border bg-surface px-3.5 transition-colors focus-within:border-accent xl:w-92 xl:flex-none 2xl:w-full"
                     >
                         <Icon src="/navbar-icons/search-icon.svg" box="size-4" className="text-ink-muted transition-colors group-focus-within:text-accent" />
                         <input
