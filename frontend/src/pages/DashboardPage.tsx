@@ -2,6 +2,7 @@ import GreetingHeader from "../components/dashboardpage/GreetingHeader.tsx";
 import FeaturedJourney from "../components/dashboardpage/FeaturedJourney.tsx";
 import PersonalOverview from "../components/dashboardpage/PersonalOverview.tsx"
 import ContinueStories from "../components/dashboardpage/ContinueStories.tsx";
+import PersonalSpace from "../components/dashboardpage/PersonalSpace.tsx";
 
 
 export default function DashboardPage() {
@@ -27,6 +28,7 @@ export default function DashboardPage() {
             />
             <PersonalOverview />
             <ContinueStories />
+            <PersonalSpace />
         </main>
     );
 }
