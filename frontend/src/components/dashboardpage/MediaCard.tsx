@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import Icon from "../Icon.tsx";
+import Tooltip from "../Tooltip.tsx";
 
 export type MediaCardProps = {
     // Where clicking the card goes, e.g. the media detail page
@@ -57,13 +58,15 @@ export default function MediaCard({
                     <p className="m-0 text-[14px] text-ink-soft">
                         {progress} / {total} {unit}
                     </p>
-                    <button
-                        type="button"
-                        aria-label={`More options for ${title}`}
-                        className="relative z-10 cursor-pointer text-ink-muted transition-colors hover:text-ink"
-                    >
-                        <Icon src="/ellipsis.svg" box="size-4" />
-                    </button>
+                    <Tooltip label="More options" className="relative z-10">
+                        <button
+                            type="button"
+                            aria-label={`More options for ${title}`}
+                            className="cursor-pointer text-ink-muted transition-colors hover:text-ink"
+                        >
+                            <Icon src="/ellipsis.svg" box="size-4" />
+                        </button>
+                    </Tooltip>
                 </div>
                 <div
                     role="progressbar"

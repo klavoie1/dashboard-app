@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import Icon from "../Icon.tsx";
+import Tooltip from "../Tooltip.tsx";
 
 // Placeholder note until journal entries are stored in the backend
 const NOTE = {
@@ -23,7 +24,9 @@ export default function JournalCard() {
                 <h2 className="m-0 text-[12px] font-medium tracking-wider text-ink-muted uppercase">
                     A note to remember
                 </h2>
-                <Icon src="/space-icons/lock-keyhole.svg" box="size-3.5" className="text-ink-muted" />
+                <Tooltip label="Private · only you can see this" align="end">
+                    <Icon src="/space-icons/lock-keyhole.svg" box="size-3.5" className="text-ink-muted" />
+                </Tooltip>
             </div>
 
             <blockquote className="m-0 font-serif text-[25px] leading-[1.35] text-ink">

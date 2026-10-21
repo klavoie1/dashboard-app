@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {Link, NavLink} from "react-router-dom";
 import Icon from "./Icon.tsx";
+import Tooltip from "./Tooltip.tsx";
 
 
 const PRIMARY_LINKS = [
@@ -125,20 +126,24 @@ export default function SiteNavbar({
                     </form>
 
                     <div className="flex flex-none items-center justify-end gap-5 xl:min-w-px xl:flex-1">
-                        <button
-                            type="button"
-                            aria-label="Notifications"
-                            className="flex cursor-pointer rounded border-0 bg-transparent p-0"
-                        >
-                            <Icon src="/notifications.svg" box="size-[19px]" className="text-ink-muted transition-colors hover:text-ink" />
-                        </button>
-                        <button
-                            type="button"
-                            aria-label="Account menu"
-                            className="flex size-8.5 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-accent-soft p-0 text-[11px] font-semibold text-accent"
-                        >
-                            {userInitials}
-                        </button>
+                        <Tooltip label="Notifications" side="bottom">
+                            <button
+                                type="button"
+                                aria-label="Notifications"
+                                className="flex cursor-pointer rounded border-0 bg-transparent p-0"
+                            >
+                                <Icon src="/notifications.svg" box="size-[19px]" className="text-ink-muted transition-colors hover:text-ink" />
+                            </button>
+                        </Tooltip>
+                        <Tooltip label="Account" side="bottom" align="end">
+                            <button
+                                type="button"
+                                aria-label="Account menu"
+                                className="flex size-8.5 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-accent-soft p-0 text-[11px] font-semibold text-accent"
+                            >
+                                {userInitials}
+                            </button>
+                        </Tooltip>
                     </div>
                 </nav>
 
