@@ -7,3 +7,4 @@ app:
   user: test
   password-hash: "{noop}test"
   remember-me-key: test-key
+  media-root: target/test-media

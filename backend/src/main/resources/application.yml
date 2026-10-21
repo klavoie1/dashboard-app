@@ -16,6 +16,10 @@ spring:
     open-in-view: false
   flyway:
     enabled: true
+  servlet:
+    multipart:
+      max-file-size: 15MB
+      max-request-size: 15MB
 app:
   user: ${APP_USER}
   password-hash: ${APP_PASSWORD_HASH}
@@ -24,6 +28,12 @@ app:
   kavita:
     url: ${KAVITA_URL:}
     api-key: ${KAVITA_API_KEY:}
+  # Fallbacks for keys not set on the settings page. AniList needs no key.
+  providers:
+    mal-client-id: ${MAL_CLIENT_ID:}
+    tmdb-token: ${TMDB_TOKEN:}
+    igdb-client-id: ${IGDB_CLIENT_ID:}
+    igdb-client-secret: ${IGDB_CLIENT_SECRET:}
   jellyfin:
     url: ${JELLYFIN_URL:}
     api-key: ${JELLYFIN_API_KEY:}
