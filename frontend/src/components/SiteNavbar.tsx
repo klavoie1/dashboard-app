@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from "react";
 import {Link, NavLink} from "react-router-dom";
 import Icon from "./Icon.tsx";
 import Tooltip from "./Tooltip.tsx";
+import {CONTAINER} from "./container.ts";
 
 
 const PRIMARY_LINKS = [
@@ -74,12 +75,13 @@ export default function SiteNavbar({
 
 
     return (
-        <div>
-            <header id="site-navigation" className="">
+        <>
+            {/* Full-width so the blurred background covers the side margins; only this row stays pinned */}
+            <header id="site-navigation" className="z-30 border-b border-line bg-bg/90 backdrop-blur md:sticky md:top-0">
 
                 {/* Top Section of Navbar - Global Navigation */}
                 {/* On wide screens a 1fr / auto / 1fr grid keeps the search box centred on the page */}
-                <nav id="global-nav" className="flex h-20 items-center gap-6 border-b border-line 2xl:grid 2xl:grid-cols-[1fr_minmax(0,24rem)_1fr] xl:gap-9">
+                <nav id="global-nav" className={`${CONTAINER} flex h-20 items-center gap-6 2xl:grid 2xl:grid-cols-[1fr_minmax(0,24rem)_1fr] xl:gap-9`}>
 
                     <div className="flex min-w-0 items-center gap-6 xl:gap-9">
                         {/* Keeper Logo & Name */}
@@ -146,41 +148,39 @@ export default function SiteNavbar({
                         </Tooltip>
                     </div>
                 </nav>
-
-                {/* Bottom Section of Navbar - Media Navigation */}
-                <nav
-                    aria-label="Media categories"
-                    className="flex h-13 items-center gap-7 overflow-x-auto scrollbar-none"
-                >
-                    <p id="media-label" className="m-0 shrink-0 text-[10px] whitespace-nowrap text-ink-muted">
-                        YOUR UNIVERSE
-                    </p>
-
-                    <div role="tablist" aria-labelledby="media-label" className="contents">
-                        {MEDIA_CATEGORIES.map((cat, index) => {
-                            const selected = activeCategory === cat.id
-                            return (
-                                <button
-                                    key={cat.id}
-                                    ref={(el) => { tabRefs.current[cat.id] = el }}
-                                    type="button"
-                                    role="tab"
-                                    aria-selected={selected}
-                                    tabIndex={selected ? 0 : -1}
-                                    onClick={() => selectCategory(cat.id)}
-                                    onKeyDown={(e) => handleTabKey(e, index)}
-                                    className="flex h-full shrink-0 cursor-pointer items-center gap-1.75 border-0 border-b-2 border-transparent bg-transparent p-0 text-xs leading-normal whitespace-nowrap text-ink-soft transition-colors hover:text-ink aria-selected:border-accent aria-selected:text-accent"
-                                >
-                                    <Icon src={cat.icon} box="size-[15px]" />
-                                    {cat.label}
-                                </button>
-                            )
-                        })}
-                    </div>
-                </nav>
-
             </header>
 
-        </div>
+            {/* Bottom Section of Navbar - Media Navigation; scrolls away with the page */}
+            <nav
+                aria-label="Media categories"
+                className={`${CONTAINER} flex h-13 items-center gap-7 overflow-x-auto scrollbar-none`}
+            >
+                <p id="media-label" className="m-0 shrink-0 text-[10px] whitespace-nowrap text-ink-muted">
+                    YOUR UNIVERSE
+                </p>
+
+                <div role="tablist" aria-labelledby="media-label" className="contents">
+                    {MEDIA_CATEGORIES.map((cat, index) => {
+                        const selected = activeCategory === cat.id
+                        return (
+                            <button
+                                key={cat.id}
+                                ref={(el) => { tabRefs.current[cat.id] = el }}
+                                type="button"
+                                role="tab"
+                                aria-selected={selected}
+                                tabIndex={selected ? 0 : -1}
+                                onClick={() => selectCategory(cat.id)}
+                                onKeyDown={(e) => handleTabKey(e, index)}
+                                className="flex h-full shrink-0 cursor-pointer items-center gap-1.75 border-0 border-b-2 border-transparent bg-transparent p-0 text-xs leading-normal whitespace-nowrap text-ink-soft transition-colors hover:text-ink aria-selected:border-accent aria-selected:text-accent"
+                            >
+                                <Icon src={cat.icon} box="size-[15px]" />
+                                {cat.label}
+                            </button>
+                        )
+                    })}
+                </div>
+            </nav>
+        </>
     )
 }

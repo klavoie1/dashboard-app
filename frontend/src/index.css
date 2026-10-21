@@ -18,6 +18,11 @@
 }
 
 @layer base {
+    /* Keeps focused or linked-to content from hiding under the sticky navbar */
+    html {
+        scroll-padding-top: 6rem;
+    }
+
     body {
         @apply m-0 bg-bg font-sans font-medium text-ink-soft;
     }
