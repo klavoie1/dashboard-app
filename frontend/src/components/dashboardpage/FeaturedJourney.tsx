@@ -1,10 +1,12 @@
-import {useState} from "react";
+import {type ReactNode, useState} from "react";
 import {Link} from "react-router-dom";
 
 // Images narrower than this (width / height) are treated as covers/posters
 const POSTER_RATIO = 1.2
 
-type FeaturedJourneyProps = {
+export type FeaturedJourneyProps = {
+    // Small label above the title
+    eyebrow?: string
     title: string
     subtitle?: string
     artwork: string
@@ -19,9 +21,12 @@ type FeaturedJourneyProps = {
     viewTo: string
     status: string
     onAction?: () => void
+    // Rendered bottom-right next to the status, e.g. carousel buttons
+    controls?: ReactNode
 }
 
 export default function FeaturedJourney({
+    eyebrow = "PICK UP WHERE YOU LEFT OFF",
     title,
     subtitle,
     artwork,
@@ -35,6 +40,7 @@ export default function FeaturedJourney({
     viewTo,
     status,
     onAction,
+    controls,
 }: FeaturedJourneyProps) {
     const [posterSrc, setPosterSrc] = useState<string | null>(null)
     const isPoster = posterSrc === artwork
@@ -70,7 +76,7 @@ export default function FeaturedJourney({
             <div className="relative flex max-w-141.25 flex-col items-start gap-4.25">
                 <p className="m-0 flex items-center gap-2.5 text-[13px] font-semibold text-accent">
                     <span aria-hidden="true" className="block h-0.5 w-7 bg-accent" />
-                    PICK UP WHERE YOU LEFT OFF
+                    {eyebrow}
                 </p>
 
                 <h2 className="m-0 flex flex-col font-serif font-normal text-ink">
@@ -110,10 +116,13 @@ export default function FeaturedJourney({
                 </div>
             </div>
 
-            <p className="absolute right-4 bottom-7.5 m-0 hidden items-center gap-2 text-[13px] text-ink md:flex md:right-8 xl:right-16">
-                <span aria-hidden="true" className="block size-1.25 rounded-full bg-accent" />
-                {status}
-            </p>
+            <div className="absolute right-4 bottom-7.5 flex items-center gap-5 md:right-8 xl:right-16">
+                <p className="m-0 hidden items-center gap-2 text-[13px] text-ink md:flex">
+                    <span aria-hidden="true" className="block size-1.25 rounded-full bg-accent" />
+                    {status}
+                </p>
+                {controls}
+            </div>
         </section>
     )
 }
