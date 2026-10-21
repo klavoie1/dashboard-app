@@ -31,7 +31,7 @@ export default function LibraryOverview() {
                 <h2 className="m-0 font-serif text-[27px] font-normal text-ink">
                     Your library, all together
                 </h2>
-                <p className="m-0 shrink-0 text-[11px] text-ink-muted">
+                <p className="m-0 shrink-0 text-[14px] text-ink-muted">
                     {TOTAL} titles
                 </p>
             </div>
@@ -45,10 +45,10 @@ export default function LibraryOverview() {
                             className="group flex h-12 items-center gap-2.5 border-b border-line text-ink-soft"
                         >
                             <Icon src={shelf.icon} box="size-[15px]" className="text-ink-muted transition-colors group-hover:text-accent" />
-                            <span className="flex-1 text-xs transition-colors group-hover:text-ink">
+                            <span className="flex-1 text-[15px] transition-colors group-hover:text-ink">
                                 {shelf.label}
                             </span>
-                            <span className="text-xs text-ink">
+                            <span className="text-[15px] text-ink">
                                 {shelf.count}
                             </span>
                             <Icon src="/space-icons/chevron-right.svg" box="size-3" className="text-ink-muted transition-transform group-hover:translate-x-0.5" />
@@ -59,15 +59,15 @@ export default function LibraryOverview() {
 
             <div className="flex items-center gap-2.25">
                 <Icon src="/space-icons/folder.svg" box="size-3.5" className="text-ink-muted" />
-                <p className="m-0 flex-1 text-[11px] text-ink-soft">
+                <p className="m-0 flex-1 text-[14px] text-ink-soft">
                     {COLLECTION.name}
                 </p>
-                <p className="m-0 text-[10px] text-ink-muted">
+                <p className="m-0 text-[13px] text-ink-muted">
                     {COLLECTION.count} titles
                 </p>
             </div>
 
-            <Link to="/library" className="mt-auto flex items-center gap-1.75 self-start text-[11px] text-accent transition-opacity hover:opacity-80">
+            <Link to="/library" className="mt-auto flex items-center gap-1.75 self-start text-[14px] text-accent transition-opacity hover:opacity-80">
                 Open my library
                 <Icon src="/featured/arrow-up-right.svg" box="size-[13px]" />
             </Link>

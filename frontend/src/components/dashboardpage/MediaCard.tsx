@@ -1,6 +1,9 @@
+import {Link} from "react-router-dom";
 import Icon from "../Icon.tsx";
 
 export type MediaCardProps = {
+    // Where clicking the card goes, e.g. the media detail page
+    to: string
     type: string
     title: string
     creator: string
@@ -14,6 +17,7 @@ export type MediaCardProps = {
 }
 
 export default function MediaCard({
+    to,
     type,
     title,
     creator,
@@ -28,17 +32,21 @@ export default function MediaCard({
     const percent = total > 0 ? Math.min(100, (progress / total) * 100) : 0
 
     return (
-        <div className="flex h-full flex-col gap-3.5 rounded-md bg-surface p-4">
+        <div className="group relative flex h-full flex-col gap-3.5 rounded-md bg-surface p-4 transition-colors hover:bg-surface-raised">
             <div className="flex gap-3.5">
                 <img src={cover} alt="" className="h-26 w-18 shrink-0 rounded-[3px] object-cover" />
                 <div className="flex flex-col gap-1">
-                    <p className="m-0 text-[9px] font-semibold text-accent uppercase">
+                    <p className="m-0 text-[12px] font-semibold text-accent uppercase">
                         {type}
                     </p>
-                    <p className="m-0 text-sm leading-[1.35] font-semibold text-ink">
+                    {/* The link's ::after covers the whole card, so the card is clickable; buttons sit above it */}
+                    <Link
+                        to={to}
+                        className="text-lg leading-[1.35] font-semibold text-ink after:absolute after:inset-0 after:rounded-md group-hover:text-accent"
+                    >
                         {title}
-                    </p>
-                    <p className="m-0 text-[10px] text-ink-muted">
+                    </Link>
+                    <p className="m-0 text-[13px] text-ink-muted">
                         {creator}
                     </p>
                 </div>
@@ -46,13 +54,13 @@ export default function MediaCard({
 
             <div className="mt-auto flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                    <p className="m-0 text-[11px] text-ink-soft">
+                    <p className="m-0 text-[14px] text-ink-soft">
                         {progress} / {total} {unit}
                     </p>
                     <button
                         type="button"
                         aria-label={`More options for ${title}`}
-                        className="cursor-pointer text-ink-muted transition-colors hover:text-ink"
+                        className="relative z-10 cursor-pointer text-ink-muted transition-colors hover:text-ink"
                     >
                         <Icon src="/ellipsis.svg" box="size-4" />
                     </button>
@@ -67,7 +75,7 @@ export default function MediaCard({
                 >
                     <div className="h-full rounded bg-accent" style={{ width: `${percent}%` }} />
                 </div>
-                <p className="m-0 text-[10px] text-ink-muted">
+                <p className="m-0 text-[13px] text-ink-muted">
                     {hint}
                 </p>
             </div>
@@ -76,7 +84,7 @@ export default function MediaCard({
                 <button
                     type="button"
                     onClick={onAction}
-                    className="flex cursor-pointer items-center gap-1 text-[11px] font-medium text-accent transition-opacity hover:opacity-80"
+                    className="relative z-10 flex cursor-pointer items-center gap-1 text-[14px] font-medium text-accent transition-opacity hover:opacity-80"
                 >
                     <Icon src="/plus.svg" box="size-[13px]" />
                     {actionLabel}

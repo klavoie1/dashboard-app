@@ -68,7 +68,7 @@ export default function FeaturedJourney({
             <div className="absolute inset-0 bg-linear-to-b from-transparent from-75% to-bg" />
 
             <div className="relative flex max-w-141.25 flex-col items-start gap-4.25">
-                <p className="m-0 flex items-center gap-2.5 text-[10px] font-semibold text-accent">
+                <p className="m-0 flex items-center gap-2.5 text-[13px] font-semibold text-accent">
                     <span aria-hidden="true" className="block h-0.5 w-7 bg-accent" />
                     PICK UP WHERE YOU LEFT OFF
                 </p>
@@ -78,7 +78,7 @@ export default function FeaturedJourney({
                     {subtitle && <span className="text-[27px] leading-normal">{subtitle}</span>}
                 </h2>
 
-                <p className="m-0 text-[13px] whitespace-pre text-ink-soft">{nextUp}</p>
+                <p className="m-0 text-base whitespace-pre text-ink-soft">{nextUp}</p>
 
                 <div className="flex items-center gap-3">
                     <div
@@ -91,26 +91,26 @@ export default function FeaturedJourney({
                     >
                         <div className="h-full rounded bg-accent" style={{ width: `${percent}%` }} />
                     </div>
-                    <p className="m-0 text-[11px] text-ink-soft">{progress} / {total} {unit}</p>
+                    <p className="m-0 text-[14px] text-ink-soft">{progress} / {total} {unit}</p>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <button
                         type="button"
                         onClick={onAction}
-                        className="flex cursor-pointer items-center gap-2 rounded-md border border-accent bg-accent px-3.5 py-2.75 text-xs font-semibold text-bg transition-opacity hover:opacity-90"
+                        className="flex cursor-pointer items-center gap-2 rounded-md border border-accent bg-accent px-3.5 py-2.75 text-[15px] font-semibold text-bg transition-opacity hover:opacity-90"
                     >
                         <img src="/featured/check.svg" alt="" aria-hidden="true" width={15} height={15} />
                         {actionLabel}
                     </button>
-                    <Link to={viewTo} className="flex items-center gap-1.75 text-xs text-ink transition-colors hover:text-accent">
+                    <Link to={viewTo} className="flex items-center gap-1.75 text-[15px] text-ink transition-colors hover:text-accent">
                         {viewLabel}
                         <img src="/featured/arrow-up-right.svg" alt="" aria-hidden="true" width={14} height={14} />
                     </Link>
                 </div>
             </div>
 
-            <p className="absolute right-4 bottom-7.5 m-0 hidden items-center gap-2 text-[10px] text-ink md:flex md:right-8 xl:right-16">
+            <p className="absolute right-4 bottom-7.5 m-0 hidden items-center gap-2 text-[13px] text-ink md:flex md:right-8 xl:right-16">
                 <span aria-hidden="true" className="block size-1.25 rounded-full bg-accent" />
                 {status}
             </p>

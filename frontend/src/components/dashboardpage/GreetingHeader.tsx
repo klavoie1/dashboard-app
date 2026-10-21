@@ -26,11 +26,11 @@ export default function GreetingHeader({
     return (
         <section className="flex flex-wrap items-center justify-between gap-6 pt-8 pb-7">
             <div className="flex flex-col gap-2">
-                <p className="m-0 text-[10px] uppercase text-ink-muted">{dateFormat} • Week {week}</p>
+                <p className="m-0 text-[13px] uppercase text-ink-muted">{dateFormat} • Week {week}</p>
                 <h1 className="m-0 font-serif text-[38px] font-normal leading-normal text-ink">
                     Good {timeOfDay(date.getHours())}, {userName}.
                 </h1>
-                <p className="m-0 text-[13px] text-ink-soft">
+                <p className="m-0 text-base text-ink-soft">
                     A few pages, another episode, a whole new world. Where to next?
                 </p>
             </div>
@@ -38,7 +38,7 @@ export default function GreetingHeader({
             <button
                 type="button"
                 onClick={onLogUpdate}
-                className="flex shrink-0 cursor-pointer items-center gap-2 rounded-md border border-line bg-surface-raised px-3.5 py-2.75 text-xs font-semibold text-ink transition-colors hover:border-accent"
+                className="flex shrink-0 cursor-pointer items-center gap-2 rounded-md border border-line bg-surface-raised px-3.5 py-2.75 text-[15px] font-semibold text-ink transition-colors hover:border-accent"
             >
                 <img src="/greeting-icons/plus.svg" alt="" aria-hidden="true" width={15} height={15} />
                 Log an update

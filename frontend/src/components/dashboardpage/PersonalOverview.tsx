@@ -26,10 +26,10 @@ export default function PersonalOverview() {
                         </p>
 
                         <div className="flex flex-col gap-px">
-                            <p className="m-0 text-xs text-ink">
+                            <p className="m-0 text-[15px] text-ink">
                                 {label}
                             </p>
-                            <p className="m-0 text-[10px] text-ink-muted">
+                            <p className="m-0 text-[13px] text-ink-muted">
                                 {description}
                             </p>
                         </div>
@@ -38,10 +38,10 @@ export default function PersonalOverview() {
 
                 <li className="flex flex-col justify-center gap-2.5 sm:col-span-3 lg:col-span-1">
                     <div className="flex justify-between">
-                        <p className="m-0 text-xs text-ink">
+                        <p className="m-0 text-[15px] text-ink">
                             Your {GOAL_YEAR} Goal
                         </p>
-                        <p className="m-0 text-[11px] text-accent">
+                        <p className="m-0 text-[14px] text-accent">
                             {GOAL_PROGRESS} / {GOAL} Stories
                         </p>
                     </div>
@@ -55,7 +55,7 @@ export default function PersonalOverview() {
                     >
                         <div className="h-full rounded bg-accent" style={{ width: `${percent}%` }} />
                     </div>
-                    <p className="m-0 text-[10px] text-ink-muted">
+                    <p className="m-0 text-[13px] text-ink-muted">
                         {message}
                     </p>
                 </li>

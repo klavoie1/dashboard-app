@@ -40,20 +40,20 @@ export default function CalendarCard() {
                                 className="flex h-13.25 w-11 shrink-0 flex-col items-center justify-center gap-0.5 rounded bg-surface-raised"
                             >
                                 <span className="text-xl leading-none text-ink">{day.getDate()}</span>
-                                <span className="text-[8px] text-ink-muted">
+                                <span className="text-[10px] text-ink-muted">
                                     {day.toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
                                 </span>
                             </time>
                             <div className="flex min-w-0 flex-col gap-1.75">
-                                <p className="m-0 text-[13px] font-semibold text-ink">{plan.title}</p>
-                                <p className="m-0 text-[10px] text-ink-muted">{plan.detail}</p>
+                                <p className="m-0 text-base font-semibold text-ink">{plan.title}</p>
+                                <p className="m-0 text-[13px] text-ink-muted">{plan.detail}</p>
                             </div>
                         </li>
                     )
                 })}
             </ul>
 
-            <Link to="/journal" className="mt-auto flex items-center gap-1.75 self-start text-[11px] text-accent transition-opacity hover:opacity-80">
+            <Link to="/journal" className="mt-auto flex items-center gap-1.75 self-start text-[14px] text-accent transition-opacity hover:opacity-80">
                 View your schedule
                 <Icon src="/featured/arrow-up-right.svg" box="size-[13px]" />
             </Link>
