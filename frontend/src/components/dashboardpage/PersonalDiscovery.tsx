@@ -76,7 +76,7 @@ export default function PersonalDiscovery({ onAdd }: { onAdd?: (id: number) => v
                             <p className="m-0 text-[12px] text-accent uppercase">{rec.type}</p>
                             {/* The link's ::after covers the whole card, like MediaCard */}
                             <Link
-                                to={`/media/${rec.id}`}
+                                to={`/library/${rec.id}`}
                                 className="text-lg leading-[1.35] font-medium text-ink after:absolute after:inset-0 group-hover:text-accent"
                             >
                                 {rec.title}

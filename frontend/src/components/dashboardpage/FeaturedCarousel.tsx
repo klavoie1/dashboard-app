@@ -19,7 +19,7 @@ const SLIDES: Slide[] = [
         unit: "episodes watched",
         actionLabel: "Mark episode 7 watched",
         viewLabel: "View anime",
-        viewTo: "/media/1",
+        viewTo: "/library/1",
         status: "IN YOUR LIBRARY · WATCHING",
     },
     {
@@ -33,7 +33,7 @@ const SLIDES: Slide[] = [
         unit: "pages read",
         actionLabel: "Log pages",
         viewLabel: "View book",
-        viewTo: "/media/7",
+        viewTo: "/library/7",
         status: "IN YOUR LIBRARY · READING",
     },
     {
@@ -47,7 +47,7 @@ const SLIDES: Slide[] = [
         unit: "% complete",
         actionLabel: "Log session",
         viewLabel: "View game",
-        viewTo: "/media/103",
+        viewTo: "/library/103",
         status: "IN YOUR LIBRARY · PLAYING",
     },
 ]

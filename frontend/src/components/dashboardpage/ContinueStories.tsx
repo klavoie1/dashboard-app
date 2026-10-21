@@ -88,7 +88,7 @@ export default function ContinueStories({ viewTo = "/library" }: { viewTo?: stri
             <ul className="m-0 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
                 {visible.map((story) => (
                     <li key={story.id}>
-                        <MediaCard {...story} to={`/media/${story.id}`} />
+                        <MediaCard {...story} to={`/library/${story.id}`} />
                     </li>
                 ))}
             </ul>
